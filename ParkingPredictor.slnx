@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ParkingPredictor.Collector/ParkingPredictor.Collector.csproj" />
+    <Project Path="src/ParkingPredictor.Domain/ParkingPredictor.Domain.csproj" />
+  </Folder>
+</Solution>
