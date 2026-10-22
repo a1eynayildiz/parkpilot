@@ -1,7 +1,9 @@
 ﻿using ParkingPredictor.Collector;
 using ParkingPredictor.Domain;
 
-using var httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
+var dataDirectory = args.Length > 0 ? args[0] : "data";
+
+using var httpClient =new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
 var client = new IsparkClient(httpClient);
 
 var dtos = await client.GetParksAsync();
@@ -25,3 +27,8 @@ foreach (var dto in dtos)
 
 Console.WriteLine($"{collectedAtUtc:u} itibarıyla {parkingLots.Count} otopark okundu.");
 Console.WriteLine($"Türü tanınmayan otopark sayısı: {parkingLots.Count(p => p.Type == ParkingLotType.Unknown)}");
+
+CsvStorage.WriteParks(dataDirectory, parkingLots);
+CsvStorage.AppendSnapshots(dataDirectory, collectedAtUtc, snapshots);
+
+Console.WriteLine($"Veriler '{Path.GetFullPath(dataDirectory)}' klasörüne yazıldı.");
